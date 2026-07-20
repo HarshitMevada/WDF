@@ -1,3 +1,41 @@
 .body{
     background-color: #29524A;
 }
+
+#div_login{
+    width: 500px;
+    height: 400px;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    margin-left: 650px;
+    margin-top: 200px;
+    margin-right: 100px;
+    background-color: #94A187;
+    text-align: center;
+}
+
+#divlogin1{
+    margin: auto;
+    background-color: #94A187;
+    width: 600px;
+    height: 820px;
+    font-size: x-large;
+}
+
+#list{
+    width: fit-content;
+    margin: auto;
+}
+
+.maindiv{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.input{
+    display: block;
+    width: 250px;
+    margin: auto;
+    padding: 5px;
+    text-align: center;
+}
