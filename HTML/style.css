@@ -29,7 +29,7 @@
 .list{
     width: fit-content;
     margin: 45px;
-    padding-top: 70px;
+    padding-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
