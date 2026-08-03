@@ -104,23 +104,48 @@
     margin-top:40px;
 }
 
-.home h1{
-    color:white;
-    font-size:40px;
-}
-
 .home p{
     color:white;
-    font-size:18px;
 }
-
-/* Menu Cards */
 
 .menu{
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
     gap:30px;
-
     margin-top:40px;
+}
+
+.course{
+    background-color:#94A187;
+    height: 300px;
+    width: 1000px;
+    margin-left: 225px;
+    padding: 5px;
+    border-radius: 15px;
+    padding: 50px;
+}
+
+.button{
+    display: block;
+    margin: 20px auto;
+}
+
+#feespay1{
+    width: 400px;
+    height: 400px;
+    background-color: #94A187;
+    border-radius: 25px;
+    padding: 30px;
+    margin-bottom: 100px;
+}
+
+#feespay2{
+    width: 1200px;
+    height:500px;
+    margin: 50px auto;
+    background-color: #94A187;
+    border-radius: 25px;
+    padding: 30px;
+    text-align: left;   
 }
