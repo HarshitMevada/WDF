@@ -22,23 +22,81 @@
         </div>
 
         <div id="divregister2">
-            <form>
-                <h1 style="text-align: center;">Register Account</h1>
-                First Name :
-                <input type="text">
-                Middle Name :
-                <input type="text">
-                Last Name :
-                <input type="text"><br><br>
-                Father's Name :<input type="text" class="input"><br><br>
-                Mother's Name :<input type="text" class="input"><br><br>
-                Contact Number :<input type="text" class="input"><br><br>
-                Email :<input type="text" class="input"><br><br>
-                Course :<input type="text" class="input"><br><br></pre>
-                <button class="button">Register</button><br>
-                <p>If you have accout :<a href = "login.html">Login Here</a></p>
+            <form class="form" id="registerForm" novalidate>
+                <h2>Student Registration</h2>
+
+                <label for="name">Full Name:</label><br>
+                <input type="text" id="name" placeholder="Enter your full name">
+                <span class="error" id="nameError"></span>
+                <br>
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" placeholder="Enter your email">
+                <span class="error" id="emailError"></span>
+                <br>
+
+                <label for="mobile">Mobile Number:</label><br>
+                <input type="tel" id="mobile" placeholder="Enter 10 digit mobile number">
+                <span class="error" id="mobileError"></span>
+                <br>
+
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" placeholder="Enter password">
+                <span class="error" id="passwordError"></span>
+                <br>
+
+                <label for="confirmPassword">Confirm Password:</label><br>
+                <input type="password" id="confirmPassword" placeholder="Confirm password">
+                <span class="error" id="confirmPasswordError"></span>
+                <br>
+
+                <label for="course">Course:</label><br>
+                <select id="course">
+                    <option value="">Select Course</option>
+                    <option value="CSE">Computer Science</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="CE">Computer Engineering</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span class="error" id="courseError"></span>
+                <br>
+
+                <label for="year">Year:</label><br>
+                <select id="year">
+                    <option value="">Select Year</option>
+                    <option value="1">First Year</option>
+                    <option value="2">Second Year</option>
+                    <option value="3">Third Year</option>
+                    <option value="4">Fourth Year</option>
+                </select>
+                <span class="error" id="yearError"></span>
+                <br>
+
+                <label>Gender:</label><br>
+
+                <input type="radio" name="gender" id="male" value="Male">
+                <label for="male">Male</label>
+
+                <input type="radio" name="gender" id="female" value="Female">
+                <label for="female">Female</label>
+
+                <input type="radio" name="gender" id="other" value="Other">
+                <label for="other">Other</label>
+
+                <br>
+                <span class="error" id="genderError"></span>
+                <br>
+
+                <input type="checkbox" id="terms">
+                <label for="terms">I accept the terms and conditions</label>
+                <br>
+                <span class="error" id="termsError"></span>
+                <br>
+
+                <button type="submit">Register</button>
+
+                <p id="success"></p>
             </form>
-        </div>
     </div>
     <script src="script.js"></script>
 </body>
