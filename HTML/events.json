@@ -1,0 +1,107 @@
+[
+    {
+        "id": 1,
+        "title": "Coding Competition",
+        "category": "Technical",
+        "date": "2026-10-10",
+        "description": "Participate in a coding competition and test your programming skills."
+    },
+    {
+        "id": 2,
+        "title": "Annual Sports Day",
+        "category": "Sports",
+        "date": "2026-10-12",
+        "description": "Take part in exciting sports and outdoor activities."
+    },
+    {
+        "id": 3,
+        "title": "Web Development Workshop",
+        "category": "Technical",
+        "date": "2026-10-15",
+        "description": "Learn HTML, CSS and JavaScript in a practical workshop."
+    },
+    {
+        "id": 4,
+        "title": "Cultural Fest",
+        "category": "Cultural",
+        "date": "2026-10-18",
+        "description": "Enjoy music, dance, performances and cultural activities."
+    },
+    {
+        "id": 5,
+        "title": "AI Seminar",
+        "category": "Technical",
+        "date": "2026-10-20",
+        "description": "Explore artificial intelligence and its real-world applications."
+    },
+    {
+        "id": 6,
+        "title": "Cricket Tournament",
+        "category": "Sports",
+        "date": "2026-10-22",
+        "description": "Join the interdepartmental cricket tournament."
+    },
+    {
+        "id": 7,
+        "title": "Photography Competition",
+        "category": "Cultural",
+        "date": "2026-10-25",
+        "description": "Showcase your photography and creative skills."
+    },
+    {
+        "id": 8,
+        "title": "Cyber Security Workshop",
+        "category": "Technical",
+        "date": "2026-10-27",
+        "description": "Understand cyber security basics and online safety."
+    },
+    {
+        "id": 9,
+        "title": "Basketball Match",
+        "category": "Sports",
+        "date": "2026-10-29",
+        "description": "Watch or participate in the college basketball match."
+    },
+    {
+        "id": 10,
+        "title": "Dance Competition",
+        "category": "Cultural",
+        "date": "2026-11-02",
+        "description": "Show your dance skills in the college competition."
+    },
+    {
+        "id": 11,
+        "title": "Project Exhibition",
+        "category": "Technical",
+        "date": "2026-11-05",
+        "description": "Present innovative projects and student ideas."
+    },
+    {
+        "id": 12,
+        "title": "Football Tournament",
+        "category": "Sports",
+        "date": "2026-11-08",
+        "description": "Compete with other teams in the football tournament."
+    },
+    {
+        "id": 13,
+        "title": "Music Night",
+        "category": "Cultural",
+        "date": "2026-11-10",
+        "description": "Enjoy live music and performances by students."
+    },
+    {
+        "id": 14,
+        "title": "Robotics Seminar",
+        "category": "Technical",
+        "date": "2026-11-12",
+        "description": "Learn about robotics, automation and new technologies."
+    },
+    {
+        "id": 15,
+        "title": "Chess Competition",
+        "category": "Sports",
+        "date": "2026-11-15",
+        "description": "Test your strategic thinking in a chess competition."
+    }
+]

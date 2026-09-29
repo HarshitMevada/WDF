@@ -18,19 +18,29 @@
     </div>
     <div class="events">
         <h1>EVENTS</h1>
-        <div class="event-container">
-            <div class="event-card">
-                <div class="event-image"></div>
-                <button>Participate</button>
-            </div>
-            <div class="event-card">
-                <div class="event-image"></div>
-                <button>Participate</button>
-            </div>
-            <div class="event-card">
-                <div class="event-image"></div>
-                <button>Participate</button>
-            </div>
+        <div class="event-tools">
+            <input type="text" id="eventSearch" placeholder="Search events...">
+
+            <select id="eventFilter">
+                <option value="All">All Categories</option>
+                <option value="Technical">Technical</option>
+                <option value="Sports">Sports</option>
+                <option value="Cultural">Cultural</option>
+            </select>
+
+            <select id="eventSort">
+                <option value="asc">Date: Oldest First</option>
+                <option value="desc">Date: Newest First</option>
+                <option value="az">Name: A to Z</option>
+            </select>
+        </div>
+        <p id="eventMessage">Loading events...</p>
+        <div class="event-container" id="eventList"></div>
+        
+        <div class="event-pagination">
+            <button id="previousPage">Previous</button>
+            <span id="pageNumber">Page 1</span>
+            <button id="nextPage">Next</button>
         </div>
     </div>
     <script src="script.js"></script>

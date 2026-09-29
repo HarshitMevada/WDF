@@ -414,3 +414,143 @@ function registerValidation() {
 if (document.getElementById("registerForm")) {
     registerValidation();
 }
+
+//Practical 6
+
+async function loadEvents6() {
+    let eventList = document.getElementById("eventList");
+    let message = document.getElementById("eventMessage");
+
+    let search = document.getElementById("eventSearch");
+    let filter = document.getElementById("eventFilter");
+    let sort = document.getElementById("eventSort");
+
+    let previous = document.getElementById("previousPage");
+    let next = document.getElementById("nextPage");
+    let pageNumber = document.getElementById("pageNumber");
+
+    let events = [];
+    let currentPage = 1;
+    let eventsPerPage = 6;
+
+    try {
+        let response = await fetch("events.json");
+
+        if (!response.ok) {
+            throw new Error("Unable to load events");
+        }
+
+        events = await response.json();
+
+        message.innerHTML = "";
+        displayEvents();
+
+    } catch (error) {
+        message.innerHTML = "Error loading events. Please try again.";
+    }
+
+    // Search, filter and sort events
+    function displayEvents() {
+        let searchText = search.value.toLowerCase();
+        let category = filter.value;
+        let sortValue = sort.value;
+
+        let filteredEvents = events.filter(function(event) {
+            return event.title.toLowerCase().includes(searchText) &&
+                   (category == "All" || event.category == category);
+        });
+
+        if (sortValue == "asc") {
+            filteredEvents.sort(function(a, b) {
+                return new Date(a.date) - new Date(b.date);
+            });
+        } else if (sortValue == "desc") {
+            filteredEvents.sort(function(a, b) {
+                return new Date(b.date) - new Date(a.date);
+            });
+        } else if (sortValue == "az") {
+            filteredEvents.sort(function(a, b) {
+                return a.title.localeCompare(b.title);
+            });
+        }
+
+        let totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
+
+        if (currentPage > totalPages) {
+            currentPage = totalPages || 1;
+        }
+
+        let start = (currentPage - 1) * eventsPerPage;
+        let pageEvents = filteredEvents.slice(start, start + eventsPerPage);
+
+        eventList.innerHTML = "";
+
+        if (pageEvents.length == 0) {
+            message.innerHTML = "No events found.";
+        } else {
+            message.innerHTML = "Total events: " + filteredEvents.length;
+        }
+
+        for (let i = 0; i < pageEvents.length; i++) {
+            let event = pageEvents[i];
+
+            let card = document.createElement("div");
+            card.className = "event-card";
+
+            card.innerHTML =
+                "<h3>" + event.title + "</h3>" +
+                "<p><b>Category:</b> " + event.category + "</p>" +
+                "<p><b>Date:</b> " + event.date + "</p>" +
+                "<p>" + event.description + "</p>" +
+                "<button>Participate</button>";
+
+            card.querySelector("button").onclick = function() {
+                alert("You selected: " + event.title);
+            };
+
+            eventList.appendChild(card);
+        }
+
+        pageNumber.innerHTML = "Page " + currentPage + " of " + (totalPages || 1);
+
+        previous.disabled = currentPage == 1;
+        next.disabled = currentPage == totalPages || totalPages == 0;
+    }
+
+    // Search events
+    search.addEventListener("input", function() {
+        currentPage = 1;
+        displayEvents();
+    });
+
+    // Filter by category
+    filter.addEventListener("change", function() {
+        currentPage = 1;
+        displayEvents();
+    });
+
+    // Sort events
+    sort.addEventListener("change", function() {
+        currentPage = 1;
+        displayEvents();
+    });
+
+    // Previous page
+    previous.addEventListener("click", function() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayEvents();
+        }
+    });
+
+    // Next page
+    next.addEventListener("click", function() {
+        currentPage++;
+        displayEvents();
+    });
+}
+
+// Run Practical 6 only on the Events page
+if (document.getElementById("eventList")) {
+    loadEvents6();
+}
