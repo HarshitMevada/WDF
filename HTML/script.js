@@ -415,9 +415,34 @@ if (document.getElementById("registerForm")) {
     registerValidation();
 }
 
+let loginUsername = document.getElementById("loginUsername");
+let loginPassword = document.getElementById("loginPassword");
+let loginButton = document.getElementById("loginButton");
+
+if (loginButton) {
+    loginButton.onclick = function() {
+
+        if (loginUsername.value == "") {
+            alert("Please enter username.");
+            return;
+        }
+
+        if (loginPassword.value == "") {
+            alert("Please enter password.");
+            return;
+        }
+
+        if (loginPassword.value.length < 6) {
+            alert("Password must contain at least 6 characters.");
+            return;
+        }
+
+        alert("Login successful!");
+    };
+}
 //Practical 6
 
-async function loadEvents6() {
+async function loadEvents() {
     let eventList = document.getElementById("eventList");
     let message = document.getElementById("eventMessage");
 
@@ -552,5 +577,5 @@ async function loadEvents6() {
 
 // Run Practical 6 only on the Events page
 if (document.getElementById("eventList")) {
-    loadEvents6();
+    loadEvents();
 }
