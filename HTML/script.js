@@ -401,10 +401,7 @@ function registerValidation() {
             validPassword && validConfirmPassword &&
             validCourse && validYear && validGender && validTerms) {
 
-            document.getElementById("success").innerHTML =
-                "Registration successful!";
-
-            alert("Registration successful!");
+            form.submit();
         } else {
             document.getElementById("success").innerHTML = "";
         }
@@ -578,4 +575,5 @@ async function loadEvents() {
 // Run Practical 6 only on the Events page
 if (document.getElementById("eventList")) {
     loadEvents();
+
 }
