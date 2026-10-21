@@ -14,7 +14,7 @@
 The application connects through MySQLi in `HTML/db.php`. Its defaults match a standard local XAMPP MySQL installation:
 
 - Host: `127.0.0.1`
-- Default port: `3306` (the currently running local XAMPP database uses `3337`)
+- Default port: `3306`
 - Database: `student_hub`
 - Username: `root`
 - Password: empty
