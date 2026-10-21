@@ -4,27 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
-<body class="body">
+<body class="body feedback-page">
     <div>
         <nav class="nav">
             <a href="home.html">CHARUSAT</a>
-            <a href="">E-Governance</a>
+            <a href="fees_payment.html">Fees</a>
             <a href="dashboard.php">Dashboard</a>
             <a href="profile.html">Profile</a>
         </nav>
-    </div><br><br>
+    </div>
 
-    <form>
-        select faculty :
-        <select style="width: 50px;">Faculty</select><br><br>
-        Teaching Style : <input type="text"><br><br>
-        Engagement with students : <input type="text"><br><br>
-        Clarity of Expectations : <input type="text"><br><br>
-        Suggestion : <input type="text"><br><br>
-        <button>Save</button>
-    </form>
+    <main class="page-shell">
+        <header class="page-heading">
+            <p class="eyebrow">YOUR VOICE MATTERS</p>
+            <h1>Faculty Feedback</h1>
+            <p>Share constructive feedback to help improve learning.</p>
+        </header>
+        <form class="page-form">
+            <label for="faculty">Select faculty</label>
+            <select id="faculty"><option value="">Choose faculty</option></select>
+            <label for="teachingStyle">Teaching style</label>
+            <input id="teachingStyle" type="text">
+            <label for="engagement">Engagement with students</label>
+            <input id="engagement" type="text">
+            <label for="expectations">Clarity of expectations</label>
+            <input id="expectations" type="text">
+            <label for="suggestion">Suggestion</label>
+            <textarea id="suggestion" rows="5"></textarea>
+            <button type="button">Save Feedback</button>
+        </form>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

@@ -4,35 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Registration</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
-<body class="body">
+<body class="body course-page">
     <div>
         <nav class="nav">
             <a href="home.html">CHARUSAT</a>
-            <a href="">E-Governance</a>
+            <a href="fees_payment.html">Fees</a>
             <a href="dashboard.php">Dashboard</a>
             <a href="profile.html">Profile</a>
         </nav>
-    </div><br><br>
+    </div>
 
-    <div class="course">
-        <h3>Compalsury Course :</h3><br><br>
-        Course Name : <input type="text"> <input type="checkbox" checked><br><br>
-        Course Name : <input type="text"> <input type="checkbox" checked><br><br>
-        Course Name : <input type="text"> <input type="checkbox" checked><br><br>
-        Course Name : <input type="text"> <input type="checkbox" checked><br><br>
-    </div><br><br>
-
-    <div class="course">
-        <h3 style="margin: 0px;">Elective Course :</h3><br><br>
-        Course Name : <input type="text"> <input type="radio" name="Radio" value="set"><br><br>
-        Course Name : <input type="text"> <input type="radio" name="Radio" value="set"><br><br>
-        Course Name : <input type="text"> <input type="radio" name="Radio" value="set"><br><br>
-        Course Name : <input type="text"> <input type="radio" name="Radio" value="set"><br><br>
-    </div><br><br>
-
-    <button class="button">Save</button>
+    <main class="course-registration">
+        <header class="page-heading">
+            <p class="eyebrow">ACADEMICS</p>
+            <h1>Course Registration</h1>
+            <p>Review required courses and choose an elective.</p>
+        </header>
+        <section class="course">
+            <h2>Compulsory Courses</h2>
+            <div class="course-options">
+                <label><input type="checkbox" checked disabled> Course Name</label>
+                <label><input type="checkbox" checked disabled> Course Name</label>
+                <label><input type="checkbox" checked disabled> Course Name</label>
+                <label><input type="checkbox" checked disabled> Course Name</label>
+            </div>
+        </section>
+        <section class="course">
+            <h2>Elective Courses</h2>
+            <div class="course-options">
+                <label><input type="radio" name="elective" value="course-1"> Course Name</label>
+                <label><input type="radio" name="elective" value="course-2"> Course Name</label>
+                <label><input type="radio" name="elective" value="course-3"> Course Name</label>
+                <label><input type="radio" name="elective" value="course-4"> Course Name</label>
+            </div>
+        </section>
+        <button class="button" type="button">Save</button>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

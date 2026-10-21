@@ -6,24 +6,46 @@ require_once __DIR__ . '/auth.php';
 $admin = requireStudentRole('admin');
 $databaseUnavailable = false;
 $studentCount = 0;
+$adminCount = 0;
 $registrationCount = 0;
-$recentStudents = [];
+$eventCount = 0;
+$recentRegistrations = [];
+$recentAdminActions = [];
 $mysqli = null;
 
 try {
     $mysqli = getDatabaseConnection();
     $studentCount = (int) $mysqli->query(
-        "SELECT COUNT(*) AS total FROM students WHERE role = 'student' AND deleted_at IS NULL"
+        "SELECT COUNT(*) AS total
+         FROM students
+         WHERE role = 'student' AND deleted_at IS NULL"
+    )->fetch_assoc()['total'];
+    $adminCount = (int) $mysqli->query(
+        "SELECT COUNT(*) AS total
+         FROM students
+         WHERE role = 'admin' AND deleted_at IS NULL"
     )->fetch_assoc()['total'];
     $registrationCount = (int) $mysqli->query(
         'SELECT COUNT(*) AS total FROM registrations'
     )->fetch_assoc()['total'];
-    $recentStudents = $mysqli->query(
-        "SELECT username, full_name, email, last_login_at
-         FROM students
-         WHERE role = 'student' AND deleted_at IS NULL
-         ORDER BY student_id DESC
-         LIMIT 10"
+    $eventCount = (int) $mysqli->query(
+        'SELECT COUNT(*) AS total FROM events'
+    )->fetch_assoc()['total'];
+    $recentRegistrations = $mysqli->query(
+        'SELECT s.full_name, s.username, c.course_name, r.study_year, r.registered_at
+         FROM registrations AS r
+         INNER JOIN students AS s ON s.student_id = r.student_id
+         INNER JOIN courses AS c ON c.course_code = r.course_code
+         ORDER BY r.registered_at DESC, r.registration_id DESC
+         LIMIT 10'
+    )->fetch_all(MYSQLI_ASSOC);
+    $recentAdminActions = $mysqli->query(
+        'SELECT a.action, a.entity_type, a.entity_id, a.created_at,
+                COALESCE(s.full_name, "Removed administrator") AS admin_name
+         FROM audit_logs AS a
+         LEFT JOIN students AS s ON s.student_id = a.admin_student_id
+         ORDER BY a.created_at DESC, a.audit_id DESC
+         LIMIT 10'
     )->fetch_all(MYSQLI_ASSOC);
 } catch (mysqli_sql_exception $exception) {
     error_log('Unable to load Student Hub admin dashboard: ' . $exception->getMessage());
@@ -45,53 +67,103 @@ function escapeAdminOutput(string $value): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Student Hub</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
-<body class="body">
+<body class="body admin-page">
     <div class="navbar">
-        <nav class="nav">
+        <nav class="nav admin-dashboard-nav">
             <a href="home.html">CHARUSAT</a>
-            <a href="admin_dashboard.php">Admin Dashboard</a>
-            <a href="admin_students.php">Manage Students</a>
-            <a href="admin_events.php">Manage Events</a>
+            <?php foreach (studentHubNavigationLinks($admin['role']) as $label => $href) { ?>
+                <a href="<?php echo escapeAdminOutput($href); ?>"><?php echo escapeAdminOutput($label); ?></a>
+            <?php } ?>
             <form method="POST" action="logout.php">
                 <input type="hidden" name="csrf_token" value="<?php echo escapeAdminOutput(getStudentHubCsrfToken()); ?>">
                 <button type="submit">Log out</button>
             </form>
         </nav>
     </div>
-    <main class="dashboard">
-        <div class="card">
+    <main class="admin-dashboard">
+        <section class="card admin-dashboard-welcome">
             <h1>Administrator Dashboard</h1>
             <p>Welcome, <?php echo escapeAdminOutput($admin['full_name']); ?>.</p>
-        </div>
+            <p>Live overview of Student Hub accounts, registrations, events, and admin activity.</p>
+        </section>
         <?php if ($databaseUnavailable) { ?>
-            <div class="card">
+            <section class="card">
                 <h2>Dashboard Unavailable</h2>
                 <p>Administrative data is temporarily unavailable. Please try again later.</p>
-            </div>
+            </section>
         <?php } else { ?>
-            <div class="card">
-                <h2>Student Accounts</h2>
-                <p><?php echo $studentCount; ?> students</p>
-                <p><?php echo $registrationCount; ?> course registrations</p>
-            </div>
-            <div class="card">
-                <h2>Recently Registered Students</h2>
-                <?php if ($recentStudents === []) { ?>
-                    <p>No student accounts have been registered.</p>
+            <section class="admin-stat-grid" aria-label="Student Hub statistics">
+                <article class="card admin-stat">
+                    <h2>Active Students</h2>
+                    <p><?php echo $studentCount; ?></p>
+                </article>
+                <article class="card admin-stat">
+                    <h2>Administrator Accounts</h2>
+                    <p><?php echo $adminCount; ?></p>
+                </article>
+                <article class="card admin-stat">
+                    <h2>Events</h2>
+                    <p><?php echo $eventCount; ?></p>
+                </article>
+                <article class="card admin-stat">
+                    <h2>Course Registrations</h2>
+                    <p><?php echo $registrationCount; ?></p>
+                </article>
+            </section>
+            <section class="card admin-dashboard-section">
+                <h2>Latest Course Registrations</h2>
+                <?php if ($recentRegistrations === []) { ?>
+                    <p>No course registrations have been recorded.</p>
                 <?php } else { ?>
-                    <?php foreach ($recentStudents as $recentStudent) { ?>
-                        <p>
-                            <b><?php echo escapeAdminOutput($recentStudent['full_name']); ?></b>
-                            (<?php echo escapeAdminOutput($recentStudent['username']); ?>) —
-                            <?php echo escapeAdminOutput($recentStudent['email']); ?>;
-                            last login:
-                            <?php echo escapeAdminOutput($recentStudent['last_login_at'] ?? 'Never'); ?>
-                        </p>
-                    <?php } ?>
+                    <div class="admin-dashboard-table-wrap">
+                        <table class="admin-dashboard-table">
+                            <thead>
+                                <tr><th>Student</th><th>Username</th><th>Course</th><th>Year</th><th>Registered</th></tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($recentRegistrations as $registration) { ?>
+                                    <tr>
+                                        <td><?php echo escapeAdminOutput($registration['full_name']); ?></td>
+                                        <td><?php echo escapeAdminOutput($registration['username']); ?></td>
+                                        <td><?php echo escapeAdminOutput($registration['course_name']); ?></td>
+                                        <td><?php echo (int) $registration['study_year']; ?></td>
+                                        <td><?php echo escapeAdminOutput($registration['registered_at']); ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
                 <?php } ?>
-            </div>
+            </section>
+            <section class="card admin-dashboard-section">
+                <h2>Recent Admin Activity</h2>
+                <?php if ($recentAdminActions === []) { ?>
+                    <p>No administrator actions have been recorded yet.</p>
+                <?php } else { ?>
+                    <div class="admin-dashboard-table-wrap">
+                        <table class="admin-dashboard-table">
+                            <thead>
+                                <tr><th>Administrator</th><th>Action</th><th>Item</th><th>Time</th></tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($recentAdminActions as $audit) { ?>
+                                    <tr>
+                                        <td><?php echo escapeAdminOutput($audit['admin_name']); ?></td>
+                                        <td><?php echo escapeAdminOutput(ucwords(str_replace('_', ' ', $audit['action']))); ?></td>
+                                        <td>
+                                            <?php echo escapeAdminOutput(ucfirst($audit['entity_type'])); ?>
+                                            <?php echo $audit['entity_id'] === null ? '' : '#' . (int) $audit['entity_id']; ?>
+                                        </td>
+                                        <td><?php echo escapeAdminOutput($audit['created_at']); ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php } ?>
+            </section>
         <?php } ?>
     </main>
     <script src="script.js"></script>

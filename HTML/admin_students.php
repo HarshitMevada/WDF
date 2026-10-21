@@ -158,6 +158,14 @@ try {
                             $auditStatement->close();
                         }
 
+                        recordAdminAudit(
+                            $mysqli,
+                            (int) $admin['student_id'],
+                            $action === 'delete' ? 'student_deleted' : 'student_restored',
+                            'student',
+                            $studentId
+                        );
+
                         $mysqli->commit();
                         $transactionActive = false;
                         $_SESSION['student_management_message'] = $action === 'delete'
@@ -335,6 +343,13 @@ try {
                         }
                         $courseStatement->execute();
                         $courseStatement->close();
+                        recordAdminAudit(
+                            $mysqli,
+                            (int) $admin['student_id'],
+                            $isEditing ? 'student_updated' : 'student_created',
+                            'student',
+                            $savedId
+                        );
                         $mysqli->commit();
                         $transactionActive = false;
 
@@ -472,32 +487,15 @@ $query = ['q' => $search, 'course' => $courseFilter, 'status' => $statusFilter];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Students | Student Hub</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .student-management { max-width: 1200px; margin: 32px auto; padding: 0 20px; }
-        .student-management .card { margin-bottom: 24px; }
-        .student-management form.management-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; align-items: end; }
-        .student-management label { display: grid; gap: 6px; font-weight: 600; }
-        .student-management input, .student-management select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
-        .student-management button, .student-management .button-link { display: inline-block; padding: 9px 13px; border: 0; border-radius: 8px; background: #4f46e5; color: #fff; text-decoration: none; cursor: pointer; }
-        .student-management .secondary { background: #64748b; }
-        .student-management .danger { background: #b91c1c; }
-        .student-management .success-message { color: #166534; }
-        .student-management .error-message { color: #991b1b; }
-        .student-table-wrap { overflow-x: auto; }
-        .student-table { width: 100%; border-collapse: collapse; min-width: 850px; }
-        .student-table th, .student-table td { padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: left; }
-        .student-table th { background: #f1f5f9; }
-        .student-table form { display: inline; }
-        .student-pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; }
-    </style>
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
-<body class="body">
+<body class="body admin-students-page">
     <div class="navbar">
         <nav class="nav">
             <a href="home.html">CHARUSAT</a>
-            <a href="admin_dashboard.php">Admin Dashboard</a>
-            <a href="admin_students.php">Manage Students</a>
+            <?php foreach (studentHubNavigationLinks('admin') as $label => $href) { ?>
+                <a href="<?php echo escapeStudentManagement($href); ?>"><?php echo escapeStudentManagement($label); ?></a>
+            <?php } ?>
             <form method="POST" action="logout.php">
                 <input type="hidden" name="csrf_token" value="<?php echo escapeStudentManagement($csrfToken); ?>">
                 <button type="submit">Log out</button>

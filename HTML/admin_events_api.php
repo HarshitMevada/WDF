@@ -53,18 +53,18 @@ $posterToRemove = null;
 $transactionActive = false;
 
 try {
+    $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+    if (!in_array($method, ['GET', 'POST'], true)) {
+        header('Allow: GET, POST');
+        respondEventApi(405, false, 'Only GET and POST requests are supported.');
+    }
+
     $student = getAuthenticatedStudent();
     if ($student === null) {
         respondEventApi(401, false, 'Please sign in to manage events.');
     }
     if ($student['role'] !== 'admin') {
         respondEventApi(403, false, 'Administrator access is required.');
-    }
-
-    $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-    if (!in_array($method, ['GET', 'POST'], true)) {
-        header('Allow: GET, POST');
-        respondEventApi(405, false, 'Only GET and POST requests are supported.');
     }
 
     $mysqli = getDatabaseConnection();
@@ -149,6 +149,7 @@ try {
         }
 
         auditEventChange($mysqli, $eventId, (int) $student['student_id'], $event['title'], 'deleted');
+        recordAdminAudit($mysqli, (int) $student['student_id'], 'event_deleted', 'event', $eventId);
         $statement = $mysqli->prepare('DELETE FROM events WHERE event_id = ?');
         $statement->bind_param('i', $eventId);
         $statement->execute();
@@ -218,6 +219,7 @@ try {
         $statement->execute();
         $statement->close();
         auditEventChange($mysqli, $eventId, (int) $student['student_id'], $input['title'], 'updated');
+        recordAdminAudit($mysqli, (int) $student['student_id'], 'event_updated', 'event', $eventId);
         $savedId = $eventId;
     } else {
         $posterPath = $uploadedPoster;
@@ -238,6 +240,7 @@ try {
         $savedId = (int) $mysqli->insert_id;
         $statement->close();
         auditEventChange($mysqli, $savedId, (int) $student['student_id'], $input['title'], 'created');
+        recordAdminAudit($mysqli, (int) $student['student_id'], 'event_created', 'event', $savedId);
     }
 
     $mysqli->commit();
@@ -270,7 +273,7 @@ try {
     }
     error_log('Student Hub event API database error: ' . $exception->getMessage());
     respondEventApi(503, false, 'Event data is temporarily unavailable. Please try again.');
-} catch (RuntimeException $exception) {
+} catch (EventPosterValidationException $exception) {
     if ($transactionActive && $mysqli instanceof mysqli) {
         $mysqli->rollback();
     }
@@ -278,6 +281,15 @@ try {
         removeEventPoster($uploadedPoster);
     }
     respondEventApi(422, false, $exception->getMessage());
+} catch (RuntimeException $exception) {
+    if ($transactionActive && $mysqli instanceof mysqli) {
+        $mysqli->rollback();
+    }
+    if ($uploadedPoster !== null) {
+        removeEventPoster($uploadedPoster);
+    }
+    error_log('Student Hub event API runtime error: ' . $exception->getMessage());
+    respondEventApi(500, false, 'The server could not save the event poster.');
 } catch (JsonException $exception) {
     error_log('Student Hub event API JSON error: ' . $exception->getMessage());
     http_response_code(500);

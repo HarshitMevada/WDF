@@ -4,35 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
-<body class="body">
+<body class="body profile-page">
     <div>
         <nav class="nav">
             <a href="home.html">CHARUSAT</a>
-            <a href="">E-Governance</a>
+            <a href="fees_payment.html">Fees</a>
             <a href="dashboard.php">Dashboard</a>
             <a href="profile.html">Profile</a>
         </nav>
-    </div><br><br>
+    </div>
 
-    <form class="form">
-        First Name :
-        <input type="text">
-        Middle Name :
-        <input type="text">
-        Last Name :
-        <input type="text"><br><br>
-        Father's Name :<input type="text"><br><br>
-        Mother's Name :<input type="text"><br><br>
-        Contact Number :<input type="text"><br><br>
-        Email :<input type="text"><br><br>
-        Permanent Address :<input type="text"><br><br>
-        Temporary Address :<input type="text"><br><br>
-        Hobby :<input type="text"><br><br>
-        Program :<input type="text"><br><br>
-        <button>Save</button>
-    </form>
+    <main class="page-shell">
+        <header class="page-heading">
+            <p class="eyebrow">ACCOUNT</p>
+            <h1>Student Profile</h1>
+            <p>Keep your personal and academic details up to date.</p>
+        </header>
+        <form class="page-form profile-form">
+            <label for="firstName">First name</label>
+            <input id="firstName" type="text" autocomplete="given-name">
+            <label for="middleName">Middle name</label>
+            <input id="middleName" type="text">
+            <label for="lastName">Last name</label>
+            <input id="lastName" type="text" autocomplete="family-name">
+            <label for="fatherName">Father's name</label>
+            <input id="fatherName" type="text">
+            <label for="motherName">Mother's name</label>
+            <input id="motherName" type="text">
+            <label for="contactNumber">Contact number</label>
+            <input id="contactNumber" type="tel" autocomplete="tel">
+            <label for="emailAddress">Email</label>
+            <input id="emailAddress" type="email" autocomplete="email">
+            <label for="permanentAddress">Permanent address</label>
+            <textarea id="permanentAddress" rows="3"></textarea>
+            <label for="temporaryAddress">Temporary address</label>
+            <textarea id="temporaryAddress" rows="3"></textarea>
+            <label for="hobby">Hobby</label>
+            <input id="hobby" type="text">
+            <label for="program">Program</label>
+            <input id="program" type="text">
+            <button type="button">Save Profile</button>
+        </form>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

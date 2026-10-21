@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    ServerName studenthub.local
+    DocumentRoot "/Applications/XAMPP/xamppfiles/htdocs/WDF/HTML"
+
+    <Directory "/Applications/XAMPP/xamppfiles/htdocs/WDF/HTML">
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog "logs/studenthub-error.log"
+    CustomLog "logs/studenthub-access.log" combined
+</VirtualHost>

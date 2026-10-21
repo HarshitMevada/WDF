@@ -183,6 +183,41 @@ function requireStudentRole(string $role): array
     return $student;
 }
 
+function studentHubNavigationLinks(string $role): array
+{
+    if ($role === 'admin') {
+        return [
+            'Admin Dashboard' => 'admin_dashboard.php',
+            'Manage Students' => 'admin_students.php',
+            'Manage Events' => 'admin_events.php',
+            'Event Calendar' => 'event_calendar.html',
+        ];
+    }
+
+    return [
+        'Home' => 'home.html',
+        'Dashboard' => 'dashboard.php',
+        'Event Calendar' => 'event_calendar.html',
+        'Profile' => 'profile.html',
+    ];
+}
+
+function recordAdminAudit(
+    mysqli $mysqli,
+    int $adminStudentId,
+    string $action,
+    string $entityType,
+    ?int $entityId = null
+): void {
+    $statement = $mysqli->prepare(
+        'INSERT INTO audit_logs (admin_student_id, action, entity_type, entity_id)
+         VALUES (?, ?, ?, ?)'
+    );
+    $statement->bind_param('issi', $adminStudentId, $action, $entityType, $entityId);
+    $statement->execute();
+    $statement->close();
+}
+
 function getStudentHubCsrfToken(): string
 {
     startStudentHubSession();

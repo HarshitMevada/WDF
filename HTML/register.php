@@ -173,21 +173,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Page</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
-<body class="body">
+<body class="body register-page">
+    <nav class="auth-topbar">
+        <a class="brand" href="home.html">CHARUSAT <span>STUDENT HUB</span></a>
+        <a href="login.php">Sign in</a>
+    </nav>
     <div class="maindiv">
         <div id="divregister1">
             <h1 style="text-align: center; background-color: #29524A;">Student Hub</h1>
-            <p>
-                <ul class="list">
-                    <li>Lecture Attendance</li>
-                    <li>Lecture Time-table</li>
-                    <li>University Result</li>
-                    <li>E-Governance</li>
-                    <li>Fees Payment</li>
-                </ul>
-            </p>
+            <ul class="list">
+                <li>Lecture Attendance</li>
+                <li>Lecture Time-table</li>
+                <li>University Result</li>
+                <li>E-Governance</li>
+                <li>Fees Payment</li>
+            </ul>
         </div>
 
         <div id="divregister2">

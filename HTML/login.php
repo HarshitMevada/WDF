@@ -51,6 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $updateStatement->bind_param('i', $studentId);
                 $updateStatement->execute();
                 $updateStatement->close();
+                if ($account['role'] === 'admin') {
+                    recordAdminAudit($mysqli, $studentId, 'admin_login', 'session');
+                }
 
                 session_regenerate_id(true);
                 $_SESSION['student_id'] = $studentId;
@@ -91,9 +94,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Student Hub</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
-<body class="body">
+<body class="body login-page">
+    <nav class="auth-topbar">
+        <a class="brand" href="home.html">CHARUSAT <span>STUDENT HUB</span></a>
+        <a href="register.php">Create account</a>
+    </nav>
     <div class="maindiv">
         <div id="divlogin1">
             <h1 style="text-align: center;">Student Hub</h1>

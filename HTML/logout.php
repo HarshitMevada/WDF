@@ -25,6 +25,9 @@ $studentId = (int) ($_SESSION['student_id'] ?? 0);
 if ($studentId > 0) {
     $mysqli = getDatabaseConnection();
     try {
+        if (($_SESSION['role'] ?? '') === 'admin') {
+            recordAdminAudit($mysqli, $studentId, 'admin_logout', 'session');
+        }
         $statement = $mysqli->prepare('DELETE FROM remember_tokens WHERE student_id = ?');
         $statement->bind_param('i', $studentId);
         $statement->execute();

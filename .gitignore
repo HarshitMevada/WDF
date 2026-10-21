@@ -1,0 +1,6 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+HTML/uploads/event-posters/*
+!HTML/uploads/event-posters/.htaccess

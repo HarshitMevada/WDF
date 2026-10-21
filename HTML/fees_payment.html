@@ -3,47 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fess Payment Portal</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Fees Payment Portal</title>
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
-<body class="body">
-    <div class="maindiv">
-        <div id="feespay1">
-            <h1 style="text-align: left;">Student Hub</h1>
-            <p>
-                <ul class="list">
-                    <li>Lecture Attendance</li>
-                    <li>Lecture Time-table</li>
-                    <li>University Result</li>
-                    <li>E-Governance</li>
-                    <li>Fees Payment</li>
-                </ul>
-            </p>
-        </div>
-
-        <div id="feespay2">
-            <form>
-                <h1 style="text-align: center;">Fees Payment Portal</h1>
-                First Name :
-                <input type="text">
-                Middle Name :
-                <input type="text">
-                Last Name :
-                <input type="text"><br><br>
-                Id Number :<input type="text"><br><br>
-                Institute :<input type="text"><br><br>
-                Branch :<input type="text"><br><br>
-                Bank Account no. :<input type="text"><br><br>
-                IFSC Code :<input type="text"><br><br>
-                Bank Branch :<input type="text"><br><br><br>
-
-                captcha :<input type="text"><br><br>
-                <button>Process Payment</button>
+<body class="body fees-page">
+    <nav class="nav">
+        <a href="home.html">CHARUSAT</a>
+        <a href="dashboard.php">Dashboard</a>
+        <a href="course_registration.html">Courses</a>
+        <a href="event_calendar.html">Events</a>
+        <a href="profile.html">Profile</a>
+    </nav>
+    <main class="page-shell fees-layout">
+        <aside class="fees-intro">
+            <p class="eyebrow">STUDENT SERVICES</p>
+            <h1>Fees Payment</h1>
+            <p>Review your payment details before continuing to the secure payment portal.</p>
+            <a href="dashboard.php">Back to dashboard</a>
+        </aside>
+        <section class="content-panel fees-panel">
+            <h2>Payment details</h2>
+            <form class="page-form fees-form">
+                <div class="field-grid">
+                    <label for="firstName">First name<input id="firstName" type="text" autocomplete="given-name"></label>
+                    <label for="middleName">Middle name<input id="middleName" type="text"></label>
+                    <label for="lastName">Last name<input id="lastName" type="text" autocomplete="family-name"></label>
+                    <label for="idNumber">ID number<input id="idNumber" type="text"></label>
+                    <label for="institute">Institute<input id="institute" type="text"></label>
+                    <label for="branch">Branch<input id="branch" type="text"></label>
+                    <label for="bankAccount">Bank account number<input id="bankAccount" inputmode="numeric" type="text"></label>
+                    <label for="ifsc">IFSC code<input id="ifsc" type="text"></label>
+                    <label for="bankBranch">Bank branch<input id="bankBranch" type="text"></label>
+                    <label for="captcha">Verification code<input id="captcha" type="text"></label>
+                </div>
+                <p class="form-note">This demo page does not process real payments.</p>
+                <button type="button">Continue to Payment</button>
             </form>
-        </div>
-    </div>
-</body>
-</html>
+        </section>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

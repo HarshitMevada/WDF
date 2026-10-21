@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Calendar</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
 
-<body class="body">
+<body class="body event-page">
     <div>
         <nav class="nav">
             <a href="home.html">CHARUSAT</a>
-            <a href="">E-Governance</a>
+            <a href="fees_payment.html">Fees</a>
             <a href="dashboard.php">Dashboard</a>
             <a href="profile.html">Profile</a>
         </nav>
@@ -19,9 +19,9 @@
     <div class="events">
         <h1>EVENTS</h1>
         <div class="event-tools">
-            <input type="text" id="eventSearch" placeholder="Search events...">
+            <input type="search" id="eventSearch" placeholder="Search events..." aria-label="Search events">
 
-            <select id="eventFilter">
+            <select id="eventFilter" aria-label="Filter events by category">
                 <option value="All">All Categories</option>
                 <option value="Technical">Technical</option>
                 <option value="Sports">Sports</option>
@@ -29,13 +29,13 @@
                 <option value="Other">Other</option>
             </select>
 
-            <select id="eventStatusFilter">
+            <select id="eventStatusFilter" aria-label="Filter events by registration status">
                 <option value="All">All statuses</option>
                 <option value="open">Open</option>
                 <option value="closed">Closed</option>
             </select>
 
-            <select id="eventSort">
+            <select id="eventSort" aria-label="Sort events">
                 <option value="asc">Date: Oldest First</option>
                 <option value="desc">Date: Newest First</option>
                 <option value="az">Name: A to Z</option>

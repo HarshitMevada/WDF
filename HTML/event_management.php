@@ -4,6 +4,10 @@ declare(strict_types=1);
 const EVENT_POSTER_MAX_BYTES = 3 * 1024 * 1024;
 const EVENT_CATEGORIES = ['Technical', 'Sports', 'Cultural', 'Other'];
 
+class EventPosterValidationException extends RuntimeException
+{
+}
+
 function removeEventPoster(?string $relativePath): void
 {
     if ($relativePath === null
@@ -29,14 +33,14 @@ function saveEventPoster(array $file): ?string
         return null;
     }
     if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK) {
-        throw new RuntimeException('The poster upload failed. Please try again.');
+        throw new EventPosterValidationException('The poster upload failed. Please try again.');
     }
     if (!isset($file['tmp_name'], $file['size'])
         || !is_string($file['tmp_name'])
         || !is_uploaded_file($file['tmp_name'])
         || (int) $file['size'] < 1
         || (int) $file['size'] > EVENT_POSTER_MAX_BYTES) {
-        throw new RuntimeException('Choose an image poster smaller than 3 MB.');
+        throw new EventPosterValidationException('Choose an image poster smaller than 3 MB.');
     }
 
     $image = @getimagesize($file['tmp_name']);
@@ -48,7 +52,7 @@ function saveEventPoster(array $file): ?string
         'image/webp' => 'webp',
     ];
     if ($image === false || !isset($extensions[$mime]) || ($image['mime'] ?? '') !== $mime) {
-        throw new RuntimeException('Posters must be valid JPEG, PNG, or WebP images.');
+        throw new EventPosterValidationException('Posters must be valid JPEG, PNG, or WebP images.');
     }
 
     $directory = __DIR__ . '/uploads/event-posters';

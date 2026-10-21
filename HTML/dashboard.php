@@ -42,15 +42,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Page</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261021-1750">
 </head>
-<body class="body">
+<body class="body student-dashboard-page">
     <div class="navbar">
         <nav class="nav">
             <a href="home.html">CHARUSAT</a>
-            <a href="">E-Governance</a>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="profile.html">Profile</a>
+            <?php foreach (studentHubNavigationLinks($authenticatedStudent['role']) as $label => $href) { ?>
+                <a href="<?php echo escapeOutput($href); ?>"><?php echo escapeOutput($label); ?></a>
+            <?php } ?>
             <form method="POST" action="logout.php">
                 <input type="hidden" name="csrf_token" value="<?php echo escapeOutput(getStudentHubCsrfToken()); ?>">
                 <button type="submit">Log out</button>
