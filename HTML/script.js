@@ -431,20 +431,21 @@ if (document.getElementById("registerForm")) {
 //Practical 6
 
 async function loadEvents() {
-    let eventList = document.getElementById("eventList");
-    let message = document.getElementById("eventMessage");
+    const eventList = document.getElementById("eventList");
+    const message = document.getElementById("eventMessage");
 
-    let search = document.getElementById("eventSearch");
-    let filter = document.getElementById("eventFilter");
-    let sort = document.getElementById("eventSort");
+    const search = document.getElementById("eventSearch");
+    const filter = document.getElementById("eventFilter");
+    const statusFilter = document.getElementById("eventStatusFilter");
+    const sort = document.getElementById("eventSort");
 
-    let previous = document.getElementById("previousPage");
-    let next = document.getElementById("nextPage");
-    let pageNumber = document.getElementById("pageNumber");
+    const previous = document.getElementById("previousPage");
+    const next = document.getElementById("nextPage");
+    const pageNumber = document.getElementById("pageNumber");
 
     let events = [];
     let currentPage = 1;
-    let eventsPerPage = 6;
+    const eventsPerPage = 6;
 
     try {
         let response = await fetch("events.php");
@@ -455,22 +456,24 @@ async function loadEvents() {
 
         events = await response.json();
 
-        message.innerHTML = "";
+        message.textContent = "";
         displayEvents();
 
     } catch (error) {
-        message.innerHTML = "Error loading events. Please try again.";
+        message.textContent = "Error loading events. Please try again.";
     }
 
     // Search, filter and sort events
     function displayEvents() {
         let searchText = search.value.toLowerCase();
         let category = filter.value;
+        let status = statusFilter.value;
         let sortValue = sort.value;
 
         let filteredEvents = events.filter(function(event) {
             return event.title.toLowerCase().includes(searchText) &&
-                   (category == "All" || event.category == category);
+                   (category == "All" || event.category == category) &&
+                   (status == "All" || event.status == status);
         });
 
         if (sortValue == "asc") {
@@ -496,12 +499,12 @@ async function loadEvents() {
         let start = (currentPage - 1) * eventsPerPage;
         let pageEvents = filteredEvents.slice(start, start + eventsPerPage);
 
-        eventList.innerHTML = "";
+        eventList.replaceChildren();
 
         if (pageEvents.length == 0) {
-            message.innerHTML = "No events found.";
+            message.textContent = "No events found.";
         } else {
-            message.innerHTML = "Total events: " + filteredEvents.length;
+            message.textContent = "Total events: " + filteredEvents.length;
         }
 
         for (let i = 0; i < pageEvents.length; i++) {
@@ -509,6 +512,14 @@ async function loadEvents() {
 
             let card = document.createElement("div");
             card.className = "event-card";
+
+            if (event.poster_path) {
+                let poster = document.createElement("img");
+                poster.className = "event-image";
+                poster.src = event.poster_path;
+                poster.alt = "Poster for " + event.title;
+                card.appendChild(poster);
+            }
 
             let title = document.createElement("h3");
             title.textContent = event.title;
@@ -530,8 +541,15 @@ async function loadEvents() {
             description.textContent = event.description;
             card.appendChild(description);
 
+            let status = document.createElement("p");
+            let statusLabel = document.createElement("b");
+            statusLabel.textContent = "Registration:";
+            status.append(statusLabel, " ", event.status == "closed" ? "Closed" : "Open");
+            card.appendChild(status);
+
             let participate = document.createElement("button");
             participate.textContent = "Participate";
+            participate.disabled = event.status == "closed";
             card.appendChild(participate);
 
             participate.onclick = function() {
@@ -541,7 +559,7 @@ async function loadEvents() {
             eventList.appendChild(card);
         }
 
-        pageNumber.innerHTML = "Page " + currentPage + " of " + (totalPages || 1);
+        pageNumber.textContent = "Page " + currentPage + " of " + (totalPages || 1);
 
         previous.disabled = currentPage == 1;
         next.disabled = currentPage == totalPages || totalPages == 0;
@@ -555,6 +573,11 @@ async function loadEvents() {
 
     // Filter by category
     filter.addEventListener("change", function() {
+        currentPage = 1;
+        displayEvents();
+    });
+
+    statusFilter.addEventListener("change", function() {
         currentPage = 1;
         displayEvents();
     });

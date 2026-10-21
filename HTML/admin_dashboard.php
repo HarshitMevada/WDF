@@ -53,6 +53,7 @@ function escapeAdminOutput(string $value): string
             <a href="home.html">CHARUSAT</a>
             <a href="admin_dashboard.php">Admin Dashboard</a>
             <a href="admin_students.php">Manage Students</a>
+            <a href="admin_events.php">Manage Events</a>
             <form method="POST" action="logout.php">
                 <input type="hidden" name="csrf_token" value="<?php echo escapeAdminOutput(getStudentHubCsrfToken()); ?>">
                 <button type="submit">Log out</button>

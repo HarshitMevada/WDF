@@ -15,9 +15,10 @@ require_once __DIR__ . '/db.php';
 try {
     $mysqli = getDatabaseConnection();
     $statement = $mysqli->prepare(
-        'SELECT event_id AS id, title, category, event_date AS date, description
+        "SELECT event_id AS id, title, category, event_date AS date, description,
+                poster_path, status
          FROM events
-         ORDER BY event_id'
+         ORDER BY event_id"
     );
     $statement->execute();
     $events = $statement->get_result()->fetch_all(MYSQLI_ASSOC);

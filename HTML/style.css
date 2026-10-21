@@ -1034,3 +1034,30 @@ a{
     margin-bottom:25px;
     color:#4f46e5;
 }
+
+.admin-event-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+}
+
+.admin-event-poster{
+    display:block;
+    width:100%;
+    max-width:360px;
+    max-height:240px;
+    object-fit:cover;
+    border-radius:10px;
+    margin:12px 0;
+}
+
+.event-error{
+    color:#b91c1c;
+}
+
+.event-card button:disabled{
+    background:#94a3b8;
+    cursor:not-allowed;
+    transform:none;
+    box-shadow:none;
+}
