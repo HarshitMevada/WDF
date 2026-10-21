@@ -34,24 +34,43 @@ try {
         $statement->bind_param('sssss', $name, $username, $email, $mobile, $passwordHash);
         $statement->execute();
         $statement->close();
-    } elseif ($action === 'delete-test-user') {
-        $statement = $mysqli->prepare('DELETE FROM students WHERE username = ?');
-        $statement->bind_param('s', $username);
-        $statement->execute();
-        $statement->close();
-    } elseif ($action === 'cleanup-admin') {
-        $eventPrefix = $argv[3] ?? '';
-        if (!str_starts_with($username, 'test_admin_')
-            || !preg_match('/\ATEST-P15-[a-f0-9]{12}\z/', $eventPrefix)) {
-            throw new RuntimeException('Invalid administrator integration-test cleanup scope.');
+    } elseif ($action === 'delete-test-user' || $action === 'cleanup-admin') {
+        if ($action === 'cleanup-admin') {
+            $eventPrefix = $argv[3] ?? '';
+            if (!str_starts_with($username, 'test_admin_')
+                || !preg_match('/\ATEST-P15-[a-f0-9]{12}\z/', $eventPrefix)) {
+                throw new RuntimeException('Invalid administrator integration-test cleanup scope.');
+            }
+
+            $statement = $mysqli->prepare(
+                'DELETE FROM events WHERE LEFT(title, CHAR_LENGTH(?)) = ?'
+            );
+            $statement->bind_param('ss', $eventPrefix, $eventPrefix);
+            $statement->execute();
+            $statement->close();
         }
 
         $statement = $mysqli->prepare(
-            'DELETE FROM events WHERE LEFT(title, CHAR_LENGTH(?)) = ?'
+            'SELECT student_id FROM students WHERE username = ? LIMIT 1'
         );
-        $statement->bind_param('ss', $eventPrefix, $eventPrefix);
+        $statement->bind_param('s', $username);
         $statement->execute();
+        $student = $statement->get_result()->fetch_assoc();
         $statement->close();
+
+        if ($student !== null) {
+            $studentId = (int) $student['student_id'];
+            foreach (['registration_audit', 'event_audit', 'audit_logs'] as $table) {
+                $statement = $mysqli->prepare(
+                    "DELETE FROM {$table} WHERE "
+                    . ($table === 'registration_audit' ? 'student_id' : 'admin_student_id')
+                    . ' = ?'
+                );
+                $statement->bind_param('i', $studentId);
+                $statement->execute();
+                $statement->close();
+            }
+        }
 
         $statement = $mysqli->prepare('DELETE FROM students WHERE username = ?');
         $statement->bind_param('s', $username);

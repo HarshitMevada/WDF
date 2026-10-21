@@ -487,7 +487,7 @@ $query = ['q' => $search, 'course' => $courseFilter, 'status' => $statusFilter];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Students | Student Hub</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1750">
+    <link rel="stylesheet" href="style.css?v=20261021-1815">
 </head>
 <body class="body admin-students-page">
     <div class="navbar">

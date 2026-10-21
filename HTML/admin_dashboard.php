@@ -67,7 +67,7 @@ function escapeAdminOutput(string $value): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Student Hub</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1750">
+    <link rel="stylesheet" href="style.css?v=20261021-1815">
 </head>
 <body class="body admin-page">
     <div class="navbar">
