@@ -477,7 +477,7 @@ a{
 /* =========================
    FEES
    ========================= */
-
+   
 #feespay1,
 #feespay2{
     background:white;
@@ -1021,4 +1021,16 @@ a{
     .modal-box{
         width:90%;
     }
+}
+
+.student-card p,
+.card p{
+    text-align:left;
+    margin:15px 0;
+    font-size:16px;
+}
+
+.card h2{
+    margin-bottom:25px;
+    color:#4f46e5;
 }

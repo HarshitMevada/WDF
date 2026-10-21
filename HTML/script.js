@@ -224,6 +224,7 @@ function registerValidation() {
     let form = document.getElementById("registerForm");
 
     let name = document.getElementById("name");
+    let username = document.getElementById("username");
     let email = document.getElementById("email");
     let mobile = document.getElementById("mobile");
     let password = document.getElementById("password");
@@ -237,9 +238,9 @@ function registerValidation() {
     function validateName() {
         let pattern = /^[A-Za-z ]{3,}$/;
 
-        if (!pattern.test(name.value.trim())) {
+        if (!pattern.test(name.value.trim()) || name.value.trim().length > 120) {
             document.getElementById("nameError").innerHTML =
-                "Enter a name with at least 3 letters.";
+                "Enter a name with 3 to 120 letters and spaces.";
             return false;
         } else {
             document.getElementById("nameError").innerHTML = "";
@@ -247,10 +248,23 @@ function registerValidation() {
         }
     }
 
+    function validateUsername() {
+        let pattern = /^[A-Za-z0-9_]{3,30}$/;
+
+        if (!pattern.test(username.value.trim())) {
+            document.getElementById("usernameError").innerHTML =
+                "Username must be 3 to 30 letters, numbers, or underscores.";
+            return false;
+        } else {
+            document.getElementById("usernameError").innerHTML = "";
+            return true;
+        }
+    }
+
     function validateEmail() {
         let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!pattern.test(email.value)) {
+        if (!pattern.test(email.value.trim()) || email.value.trim().length > 254) {
             document.getElementById("emailError").innerHTML =
                 "Enter a valid email address.";
             return false;
@@ -299,7 +313,7 @@ function registerValidation() {
     }
 
     function validateCourse() {
-        if (course.value == "") {
+        if (!["CSE", "IT", "CE", "Other"].includes(course.value)) {
             document.getElementById("courseError").innerHTML =
                 "Please select a course.";
             return false;
@@ -310,7 +324,7 @@ function registerValidation() {
     }
 
     function validateYear() {
-        if (year.value == "") {
+        if (!["1", "2", "3", "4"].includes(year.value)) {
             document.getElementById("yearError").innerHTML =
                 "Please select your year.";
             return false;
@@ -365,6 +379,7 @@ function registerValidation() {
     }
 
     name.addEventListener("input", validateName);
+    username.addEventListener("input", validateUsername);
     email.addEventListener("input", validateEmail);
     mobile.addEventListener("input", validateMobile);
     password.addEventListener("input", function() {
@@ -388,6 +403,7 @@ function registerValidation() {
         event.preventDefault();
 
         let validName = validateName();
+        let validUsername = validateUsername();
         let validEmail = validateEmail();
         let validMobile = validateMobile();
         let validPassword = validatePassword();
@@ -397,7 +413,7 @@ function registerValidation() {
         let validGender = validateGender();
         let validTerms = validateTerms();
 
-        if (validName && validEmail && validMobile &&
+        if (validName && validUsername && validEmail && validMobile &&
             validPassword && validConfirmPassword &&
             validCourse && validYear && validGender && validTerms) {
 
@@ -412,31 +428,6 @@ if (document.getElementById("registerForm")) {
     registerValidation();
 }
 
-let loginUsername = document.getElementById("loginUsername");
-let loginPassword = document.getElementById("loginPassword");
-let loginButton = document.getElementById("loginButton");
-
-if (loginButton) {
-    loginButton.onclick = function() {
-
-        if (loginUsername.value == "") {
-            alert("Please enter username.");
-            return;
-        }
-
-        if (loginPassword.value == "") {
-            alert("Please enter password.");
-            return;
-        }
-
-        if (loginPassword.value.length < 6) {
-            alert("Password must contain at least 6 characters.");
-            return;
-        }
-
-        alert("Login successful!");
-    };
-}
 //Practical 6
 
 async function loadEvents() {
@@ -456,7 +447,7 @@ async function loadEvents() {
     let eventsPerPage = 6;
 
     try {
-        let response = await fetch("events.json");
+        let response = await fetch("events.php");
 
         if (!response.ok) {
             throw new Error("Unable to load events");
@@ -519,14 +510,31 @@ async function loadEvents() {
             let card = document.createElement("div");
             card.className = "event-card";
 
-            card.innerHTML =
-                "<h3>" + event.title + "</h3>" +
-                "<p><b>Category:</b> " + event.category + "</p>" +
-                "<p><b>Date:</b> " + event.date + "</p>" +
-                "<p>" + event.description + "</p>" +
-                "<button>Participate</button>";
+            let title = document.createElement("h3");
+            title.textContent = event.title;
+            card.appendChild(title);
 
-            card.querySelector("button").onclick = function() {
+            let category = document.createElement("p");
+            let categoryLabel = document.createElement("b");
+            categoryLabel.textContent = "Category:";
+            category.append(categoryLabel, " ", event.category);
+            card.appendChild(category);
+
+            let date = document.createElement("p");
+            let dateLabel = document.createElement("b");
+            dateLabel.textContent = "Date:";
+            date.append(dateLabel, " ", event.date);
+            card.appendChild(date);
+
+            let description = document.createElement("p");
+            description.textContent = event.description;
+            card.appendChild(description);
+
+            let participate = document.createElement("button");
+            participate.textContent = "Participate";
+            card.appendChild(participate);
+
+            participate.onclick = function() {
                 alert("You selected: " + event.title);
             };
 

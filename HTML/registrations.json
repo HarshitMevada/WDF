@@ -7,5 +7,23 @@
         "course": "CSE",
         "year": "2",
         "gender": "Male"
+    },
+    {
+        "name": "Harshit Mevada",
+        "email": "harshitmevada22@gmail.com",
+        "mobile": "9726108812",
+        "password": "$2y$10$VkXH3LIVYIfqRAu.JrlV9uCijGsc.RZ1RjcsJKf4J4AaqebDi5f\/a",
+        "course": "IT",
+        "year": "2",
+        "gender": "Male"
+    },
+    {
+        "name": "Harshit Mevada",
+        "email": "harshitmevada22@gmail.com",
+        "mobile": "7874783012",
+        "password": "$2y$10$jIL2AVR9y9PSSDZjpFvgVuetQ0\/WrIi6KyHS985.DQeup4dTc.sfS",
+        "course": "CSE",
+        "year": "2",
+        "gender": "Male"
     }
 ]
