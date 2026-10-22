@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Registration</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1815">
+    <link rel="stylesheet" href="style.css?v=20261022-1827">
 </head>
 <body class="body course-page">
     <div>
@@ -20,27 +20,46 @@
         <header class="page-heading">
             <p class="eyebrow">ACADEMICS</p>
             <h1>Course Registration</h1>
-            <p>Review required courses and choose an elective.</p>
+            <p>Review your required courses, then select one elective for the semester.</p>
         </header>
-        <section class="course">
-            <h2>Compulsory Courses</h2>
+        <div class="registration-summary" aria-label="Registration overview">
+            <div><span class="summary-number">04</span><span>Required courses</span></div>
+            <div><span class="summary-number">01</span><span>Elective to choose</span></div>
+        </div>
+        <section class="course registration-section">
+            <div class="section-heading">
+                <div>
+                    <p class="section-kicker">INCLUDED IN YOUR PROGRAM</p>
+                    <h2>Compulsory courses</h2>
+                </div>
+                <span class="section-status">Required</span>
+            </div>
             <div class="course-options">
-                <label><input type="checkbox" checked disabled> Course Name</label>
-                <label><input type="checkbox" checked disabled> Course Name</label>
-                <label><input type="checkbox" checked disabled> Course Name</label>
-                <label><input type="checkbox" checked disabled> Course Name</label>
+                <label><input type="checkbox" checked disabled><span>Course Name <small>Required course 01</small></span></label>
+                <label><input type="checkbox" checked disabled><span>Course Name <small>Required course 02</small></span></label>
+                <label><input type="checkbox" checked disabled><span>Course Name <small>Required course 03</small></span></label>
+                <label><input type="checkbox" checked disabled><span>Course Name <small>Required course 04</small></span></label>
             </div>
         </section>
-        <section class="course">
-            <h2>Elective Courses</h2>
+        <section class="course registration-section">
+            <div class="section-heading">
+                <div>
+                    <p class="section-kicker">PERSONALIZE YOUR SEMESTER</p>
+                    <h2>Elective courses</h2>
+                </div>
+                <span class="section-status section-status-choice">Choose one</span>
+            </div>
             <div class="course-options">
-                <label><input type="radio" name="elective" value="course-1"> Course Name</label>
-                <label><input type="radio" name="elective" value="course-2"> Course Name</label>
-                <label><input type="radio" name="elective" value="course-3"> Course Name</label>
-                <label><input type="radio" name="elective" value="course-4"> Course Name</label>
+                <label><input type="radio" name="elective" value="course-1"><span>Course Name <small>Elective option 01</small></span></label>
+                <label><input type="radio" name="elective" value="course-2"><span>Course Name <small>Elective option 02</small></span></label>
+                <label><input type="radio" name="elective" value="course-3"><span>Course Name <small>Elective option 03</small></span></label>
+                <label><input type="radio" name="elective" value="course-4"><span>Course Name <small>Elective option 04</small></span></label>
             </div>
         </section>
-        <button class="button" type="button">Save</button>
+        <div class="registration-actions">
+            <p>Choose one elective before saving your selection.</p>
+            <button class="button" type="button">Save registration</button>
+        </div>
     </main>
     <script src="script.js"></script>
 </body>

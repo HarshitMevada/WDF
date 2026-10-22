@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam Schedule</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1815">
+    <link rel="stylesheet" href="style.css?v=20261022-1827">
 </head>
 <body class="body exam-page">
     <div>
@@ -22,9 +22,12 @@
             <h1>Exam Schedule</h1>
             <p>Keep track of your upcoming examinations.</p>
         </header>
-        <section class="content-panel exam-placeholder">
-            <h2>Schedule coming soon</h2>
-            <p>Your examination dates will appear here when they are published.</p>
+        <section class="content-panel exam-placeholder" aria-labelledby="exam-empty-title">
+            <div class="exam-empty-icon" aria-hidden="true">EX</div>
+            <p class="section-kicker">NO DATES PUBLISHED</p>
+            <h2 id="exam-empty-title">Your exam schedule is on its way</h2>
+            <p>Examination dates will appear here as soon as they are published. Check back for updates.</p>
+            <a class="text-link" href="course_registration.html">Review your courses <span aria-hidden="true">→</span></a>
         </section>
     </main>
     <script src="script.js"></script>

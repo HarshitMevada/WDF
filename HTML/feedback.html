@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1815">
+    <link rel="stylesheet" href="style.css?v=20261022-1827">
 </head>
 <body class="body feedback-page">
     <div>
@@ -20,20 +20,27 @@
         <header class="page-heading">
             <p class="eyebrow">YOUR VOICE MATTERS</p>
             <h1>Faculty Feedback</h1>
-            <p>Share constructive feedback to help improve learning.</p>
+            <p>Share constructive feedback to help improve learning. Your thoughtful suggestions make a difference.</p>
         </header>
-        <form class="page-form">
-            <label for="faculty">Select faculty</label>
-            <select id="faculty"><option value="">Choose faculty</option></select>
-            <label for="teachingStyle">Teaching style</label>
-            <input id="teachingStyle" type="text">
-            <label for="engagement">Engagement with students</label>
-            <input id="engagement" type="text">
-            <label for="expectations">Clarity of expectations</label>
-            <input id="expectations" type="text">
-            <label for="suggestion">Suggestion</label>
-            <textarea id="suggestion" rows="5"></textarea>
-            <button type="button">Save Feedback</button>
+        <form class="page-form feedback-form">
+            <div class="form-section">
+                <p class="section-kicker">ABOUT YOUR FEEDBACK</p>
+                <label for="faculty">Select faculty
+                    <select id="faculty"><option value="">Choose faculty</option></select>
+                </label>
+            </div>
+            <div class="feedback-topics">
+                <label for="teachingStyle">Teaching style<input id="teachingStyle" type="text" placeholder="Share your thoughts"></label>
+                <label for="engagement">Engagement with students<input id="engagement" type="text" placeholder="Share your thoughts"></label>
+                <label for="expectations">Clarity of expectations<input id="expectations" type="text" placeholder="Share your thoughts"></label>
+            </div>
+            <label for="suggestion">Your suggestion
+                <textarea id="suggestion" rows="5" placeholder="What is one thing that could make your learning experience better?"></textarea>
+            </label>
+            <div class="form-submit-row">
+                <p>Keep feedback respectful and focused on learning.</p>
+                <button type="button">Save feedback</button>
+            </div>
         </form>
     </main>
     <script src="script.js"></script>

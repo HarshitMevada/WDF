@@ -18,7 +18,7 @@ function escapeEventAdmin(string $value): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Events | Student Hub</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1815">
+    <link rel="stylesheet" href="style.css?v=20261022-1827">
     <script src="admin_events.js" defer></script>
 </head>
 <body class="body admin-events-page">

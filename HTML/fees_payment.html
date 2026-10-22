@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fees Payment Portal</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1815">
+    <link rel="stylesheet" href="style.css?v=20261022-1827">
 </head>
 <body class="body fees-page">
     <nav class="nav">
@@ -18,26 +18,47 @@
         <aside class="fees-intro">
             <p class="eyebrow">STUDENT SERVICES</p>
             <h1>Fees Payment</h1>
-            <p>Review your payment details before continuing to the secure payment portal.</p>
-            <a href="dashboard.php">Back to dashboard</a>
+            <p>Confirm your student and bank details before continuing. This page is a visual demo and does not collect or process payments.</p>
+            <div class="payment-steps" aria-label="Payment steps">
+                <span class="payment-step-current"><b>1</b> Details</span>
+                <span><b>2</b> Review</span>
+                <span><b>3</b> Payment</span>
+            </div>
+            <a href="dashboard.php">← Back to dashboard</a>
         </aside>
         <section class="content-panel fees-panel">
-            <h2>Payment details</h2>
-            <form class="page-form fees-form">
-                <div class="field-grid">
-                    <label for="firstName">First name<input id="firstName" type="text" autocomplete="given-name"></label>
-                    <label for="middleName">Middle name<input id="middleName" type="text"></label>
-                    <label for="lastName">Last name<input id="lastName" type="text" autocomplete="family-name"></label>
-                    <label for="idNumber">ID number<input id="idNumber" type="text"></label>
-                    <label for="institute">Institute<input id="institute" type="text"></label>
-                    <label for="branch">Branch<input id="branch" type="text"></label>
-                    <label for="bankAccount">Bank account number<input id="bankAccount" inputmode="numeric" type="text"></label>
-                    <label for="ifsc">IFSC code<input id="ifsc" type="text"></label>
-                    <label for="bankBranch">Bank branch<input id="bankBranch" type="text"></label>
-                    <label for="captcha">Verification code<input id="captcha" type="text"></label>
+            <div class="fees-panel-heading">
+                <div>
+                    <p class="section-kicker">STEP 1 OF 3</p>
+                    <h2>Payment details</h2>
                 </div>
-                <p class="form-note">This demo page does not process real payments.</p>
-                <button type="button">Continue to Payment</button>
+                <span class="demo-badge">DEMO</span>
+            </div>
+            <form class="page-form fees-form">
+                <fieldset class="form-section">
+                    <legend>Student information</legend>
+                    <div class="field-grid">
+                        <label for="firstName">First name<input id="firstName" type="text" autocomplete="given-name"></label>
+                        <label for="middleName">Middle name<input id="middleName" type="text" autocomplete="additional-name"></label>
+                        <label for="lastName">Last name<input id="lastName" type="text" autocomplete="family-name"></label>
+                        <label for="idNumber">Student ID<input id="idNumber" type="text" autocomplete="off"></label>
+                        <label for="institute">Institute<input id="institute" type="text" autocomplete="organization"></label>
+                        <label for="branch">Program / branch<input id="branch" type="text"></label>
+                    </div>
+                </fieldset>
+                <fieldset class="form-section">
+                    <legend>Bank information</legend>
+                    <div class="field-grid">
+                        <label for="bankAccount">Bank account number<input id="bankAccount" inputmode="numeric" type="text" autocomplete="off"></label>
+                        <label for="ifsc">IFSC code<input id="ifsc" type="text" autocomplete="off"></label>
+                        <label for="bankBranch">Bank branch<input id="bankBranch" type="text" autocomplete="off"></label>
+                        <label for="captcha">Verification code<input id="captcha" type="text" autocomplete="off"></label>
+                    </div>
+                </fieldset>
+                <div class="payment-form-footer">
+                    <p class="form-note">Demo only — do not enter real banking or payment information.</p>
+                    <button type="button">Continue to review <span aria-hidden="true">→</span></button>
+                </div>
             </form>
         </section>
     </main>

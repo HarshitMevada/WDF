@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1815">
+    <link rel="stylesheet" href="style.css?v=20261022-1827">
 </head>
 <body class="body profile-page">
     <div>
@@ -23,29 +23,36 @@
             <p>Keep your personal and academic details up to date.</p>
         </header>
         <form class="page-form profile-form">
-            <label for="firstName">First name</label>
-            <input id="firstName" type="text" autocomplete="given-name">
-            <label for="middleName">Middle name</label>
-            <input id="middleName" type="text">
-            <label for="lastName">Last name</label>
-            <input id="lastName" type="text" autocomplete="family-name">
-            <label for="fatherName">Father's name</label>
-            <input id="fatherName" type="text">
-            <label for="motherName">Mother's name</label>
-            <input id="motherName" type="text">
-            <label for="contactNumber">Contact number</label>
-            <input id="contactNumber" type="tel" autocomplete="tel">
-            <label for="emailAddress">Email</label>
-            <input id="emailAddress" type="email" autocomplete="email">
-            <label for="permanentAddress">Permanent address</label>
-            <textarea id="permanentAddress" rows="3"></textarea>
-            <label for="temporaryAddress">Temporary address</label>
-            <textarea id="temporaryAddress" rows="3"></textarea>
-            <label for="hobby">Hobby</label>
-            <input id="hobby" type="text">
-            <label for="program">Program</label>
-            <input id="program" type="text">
-            <button type="button">Save Profile</button>
+            <fieldset class="form-section">
+                <legend>Personal details</legend>
+                <div class="profile-fields">
+                    <label for="firstName">First name<input id="firstName" type="text" autocomplete="given-name"></label>
+                    <label for="middleName">Middle name<input id="middleName" type="text" autocomplete="additional-name"></label>
+                    <label for="lastName">Last name<input id="lastName" type="text" autocomplete="family-name"></label>
+                    <label for="fatherName">Father's name<input id="fatherName" type="text"></label>
+                    <label for="motherName">Mother's name<input id="motherName" type="text"></label>
+                    <label for="hobby">Hobby<input id="hobby" type="text"></label>
+                </div>
+            </fieldset>
+            <fieldset class="form-section">
+                <legend>Contact information</legend>
+                <div class="profile-fields">
+                    <label for="contactNumber">Contact number<input id="contactNumber" type="tel" autocomplete="tel"></label>
+                    <label for="emailAddress">Email<input id="emailAddress" type="email" autocomplete="email"></label>
+                    <label for="permanentAddress">Permanent address<textarea id="permanentAddress" rows="3" autocomplete="street-address"></textarea></label>
+                    <label for="temporaryAddress">Temporary address<textarea id="temporaryAddress" rows="3"></textarea></label>
+                </div>
+            </fieldset>
+            <fieldset class="form-section">
+                <legend>Academic details</legend>
+                <div class="profile-fields profile-fields-single">
+                    <label for="program">Program<input id="program" type="text"></label>
+                </div>
+            </fieldset>
+            <div class="form-submit-row">
+                <p>Keep your contact details current so important updates reach you.</p>
+                <button type="button">Save profile</button>
+            </div>
         </form>
     </main>
     <script src="script.js"></script>

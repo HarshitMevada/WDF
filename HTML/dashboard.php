@@ -41,8 +41,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Page</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1815">
+    <title>Student Dashboard | Student Hub</title>
+    <link rel="stylesheet" href="style.css?v=20261022-1849">
 </head>
 <body class="body student-dashboard-page">
     <div class="navbar">
@@ -57,47 +57,88 @@
             </form>
         </nav>
     </div>
-    <br><br>
-    <div class="dashboard">
-            <?php if ($databaseUnavailable) { ?>
-                <div class="card">
-                    <h2>Dashboard Unavailable</h2>
-                    <p>Student information is temporarily unavailable. Please try again later.</p>
+    <main class="student-dashboard-content">
+        <?php if ($databaseUnavailable) { ?>
+            <section class="card dashboard-message">
+                <h1>Dashboard unavailable</h1>
+                <p>Student information is temporarily unavailable. Please try again later.</p>
+            </section>
+        <?php } elseif ($student != null) { ?>
+            <header class="student-dashboard-welcome">
+                <div>
+                    <p class="eyebrow">YOUR STUDENT HUB</p>
+                    <h1>Welcome back, <?php echo escapeOutput($student["full_name"]); ?></h1>
+                    <p>Here’s a quick overview of your academic services.</p>
                 </div>
-            <?php } elseif ($student != null) { ?>
-                <div class="card student-card">
-                    <h2>Student Profile</h2>
-                    <p><b>Name:</b> <?php echo escapeOutput($student["full_name"]); ?></p>
-                    <p><b>Email:</b> <?php echo escapeOutput($student["email"]); ?></p>
-                    <p><b>Mobile:</b> <?php echo escapeOutput($student["mobile"]); ?></p>
-                    <p><b>Course:</b> <?php echo escapeOutput($student["course_code"]); ?></p>
-                    <p><b>Year:</b> <?php echo escapeOutput((string) $student["study_year"]); ?></p>
-                    <p><b>Gender:</b> <?php echo escapeOutput($student["gender"]); ?></p>
+                <div class="student-dashboard-course">
+                    <span>ENROLLED COURSE</span>
+                    <strong><?php echo escapeOutput($student["course_code"]); ?></strong>
+                    <small>Year <?php echo escapeOutput((string) $student["study_year"]); ?></small>
                 </div>
+            </header>
+            <section class="student-dashboard-services" aria-label="Academic services">
+                <article class="student-service-card">
+                    <div class="student-service-heading">
+                        <span class="student-service-icon" aria-hidden="true">▦</span>
+                        <div><p class="section-kicker">ACADEMICS</p><h2>Time table</h2></div>
+                    </div>
+                    <div class="student-service-content">
+                        <p class="student-service-status">Schedule not published</p>
+                        <p>Your class timetable will appear here when it is available in Student Hub.</p>
+                    </div>
+                    <a href="course_registration.html">Review course options <span aria-hidden="true">→</span></a>
+                </article>
 
-                <div class="card">
-                    <h2>Academic Information</h2>
-                    <p><b>Course:</b> <?php echo escapeOutput($student["course_code"]); ?></p>
-                    <p><b>Current Year:</b> <?php echo escapeOutput((string) $student["study_year"]); ?></p>
-                    <p><b>Status:</b> Active Student</p>
-                </div>
+                <article class="student-service-card">
+                    <div class="student-service-heading">
+                        <span class="student-service-icon" aria-hidden="true">◔</span>
+                        <div><p class="section-kicker">ATTENDANCE</p><h2>Lecture attendance</h2></div>
+                    </div>
+                    <div class="student-service-content">
+                        <p class="student-service-status">No attendance data</p>
+                        <p>Attendance records are not connected to Student Hub yet.</p>
+                    </div>
+                    <a href="feedback.html">Share feedback <span aria-hidden="true">→</span></a>
+                </article>
 
-                <div class="card">
-                    <h2>Student Services</h2>
-                    <p>Lecture Attendance</p>
-                    <p>Lecture Time-table</p>
-                    <p>University Result</p>
-                    <p>Fees Payment</p>
-                    <p>E-Governance</p>
-                </div>
+                <article class="student-service-card">
+                    <div class="student-service-heading">
+                        <span class="student-service-icon" aria-hidden="true">₹</span>
+                        <div><p class="section-kicker">STUDENT SERVICES</p><h2>Fees details</h2></div>
+                    </div>
+                    <div class="student-service-content">
+                        <p class="student-service-status">Payment demo</p>
+                        <p>View the fees page. It is a demonstration and does not process payments.</p>
+                    </div>
+                    <a href="fees_payment.html">Open fees page <span aria-hidden="true">→</span></a>
+                </article>
 
-            <?php } else { ?>
-                <div class="card">
-                    <h2>No Student Data</h2>
-                    <p>Please register a student first.</p>
-                </div>
-            <?php } ?>
-        </div>
+                <article class="student-service-card">
+                    <div class="student-service-heading">
+                        <span class="student-service-icon" aria-hidden="true">✦</span>
+                        <div><p class="section-kicker">ACADEMICS</p><h2>University result</h2></div>
+                    </div>
+                    <div class="student-service-content">
+                        <p class="student-service-status">No results published</p>
+                        <p>Your results will appear here when result data is available in Student Hub.</p>
+                    </div>
+                    <a href="exam_schedule.html">View exam schedule <span aria-hidden="true">→</span></a>
+                </article>
+            </section>
+
+            <section class="student-dashboard-profile" aria-label="Student profile summary">
+                <span>Signed in as</span>
+                <strong><?php echo escapeOutput($student["full_name"]); ?></strong>
+                <span><?php echo escapeOutput($student["email"]); ?></span>
+                <a href="profile.html">View profile <span aria-hidden="true">→</span></a>
+            </section>
+        <?php } else { ?>
+            <section class="card dashboard-message">
+                <h1>No student data</h1>
+                <p>Please register a student first.</p>
+            </section>
+        <?php } ?>
+    </main>
     <script src="script.js"></script>
 </body>
 </html> 

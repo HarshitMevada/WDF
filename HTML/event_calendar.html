@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Calendar</title>
-    <link rel="stylesheet" href="style.css?v=20261021-1815">
+    <link rel="stylesheet" href="style.css?v=20261022-1827">
 </head>
 
 <body class="body event-page">
@@ -16,9 +16,14 @@
             <a href="profile.html">Profile</a>
         </nav>
     </div>
-    <div class="events">
-        <h1>EVENTS</h1>
-        <div class="event-tools">
+    <main class="events">
+        <header class="events-heading">
+            <p class="eyebrow">LIFE ON CAMPUS</p>
+            <h1>Event calendar</h1>
+            <p>Discover activities, workshops, and moments happening around campus.</p>
+        </header>
+        <section class="event-filter-panel" aria-label="Search and filter events">
+            <div class="event-tools">
             <input type="search" id="eventSearch" placeholder="Search events..." aria-label="Search events">
 
             <select id="eventFilter" aria-label="Filter events by category">
@@ -40,15 +45,17 @@
                 <option value="desc">Date: Newest First</option>
                 <option value="az">Name: A to Z</option>
             </select>
-        </div>
-        <p id="eventMessage">Loading events...</p>
+            </div>
+            <p class="filter-hint">Search by name or narrow the list by category, status, or date.</p>
+        </section>
+        <p id="eventMessage" role="status" aria-live="polite">Loading events...</p>
         <div class="event-container" id="eventList"></div>
         
         <div class="event-pagination">
             <button id="previousPage">Previous</button>
             <span id="pageNumber">Page 1</span>
             <button id="nextPage">Next</button>
-        </div>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
