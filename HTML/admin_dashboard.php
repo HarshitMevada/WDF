@@ -10,6 +10,7 @@ $adminCount = 0;
 $registrationCount = 0;
 $eventCount = 0;
 $recentRegistrations = [];
+$recentStudentActivity = [];
 $recentAdminActions = [];
 $mysqli = null;
 
@@ -38,6 +39,23 @@ try {
          INNER JOIN courses AS c ON c.course_code = r.course_code
          ORDER BY r.registered_at DESC, r.registration_id DESC
          LIMIT 10'
+    )->fetch_all(MYSQLI_ASSOC);
+    $recentStudentActivity = $mysqli->query(
+        "SELECT activity.full_name, activity.username, activity.action, activity.activity_at
+         FROM (
+             SELECT s.full_name, s.username, ra.action, ra.created_at AS activity_at,
+                    ra.audit_id AS activity_id
+             FROM registration_audit AS ra
+             INNER JOIN students AS s ON s.student_id = ra.student_id
+             WHERE s.role = 'student' AND ra.action = 'student_registered'
+             UNION ALL
+             SELECT s.full_name, s.username, 'student_login' AS action,
+                    s.last_login_at AS activity_at, s.student_id AS activity_id
+             FROM students AS s
+             WHERE s.role = 'student' AND s.last_login_at IS NOT NULL
+         ) AS activity
+         ORDER BY activity.activity_at DESC, activity.activity_id DESC
+         LIMIT 10"
     )->fetch_all(MYSQLI_ASSOC);
     $recentAdminActions = $mysqli->query(
         'SELECT a.action, a.entity_type, a.entity_id, a.created_at,
@@ -130,6 +148,30 @@ function escapeAdminOutput(string $value): string
                                         <td><?php echo escapeAdminOutput($registration['course_name']); ?></td>
                                         <td><?php echo (int) $registration['study_year']; ?></td>
                                         <td><?php echo escapeAdminOutput($registration['registered_at']); ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php } ?>
+            </section>
+            <section class="card admin-dashboard-section">
+                <h2>Recent Student Activity</h2>
+                <?php if ($recentStudentActivity === []) { ?>
+                    <p>No student activity has been recorded yet.</p>
+                <?php } else { ?>
+                    <div class="admin-dashboard-table-wrap">
+                        <table class="admin-dashboard-table">
+                            <thead>
+                                <tr><th>Student</th><th>Username</th><th>Activity</th><th>Time</th></tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($recentStudentActivity as $activity) { ?>
+                                    <tr>
+                                        <td><?php echo escapeAdminOutput($activity['full_name']); ?></td>
+                                        <td><?php echo escapeAdminOutput($activity['username']); ?></td>
+                                        <td><?php echo escapeAdminOutput(ucwords(str_replace('_', ' ', $activity['action']))); ?></td>
+                                        <td><?php echo escapeAdminOutput($activity['activity_at']); ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
